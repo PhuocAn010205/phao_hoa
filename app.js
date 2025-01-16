@@ -53,8 +53,7 @@ class Particle {
     this.angle = Math.random() * Math.PI * 2;
     this.alpha = 1;
     this.decay = Math.random() * 0.02 + 0.01;
-    this.color = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
-
+    this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
   }
 
   update() {
@@ -97,10 +96,20 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
+// Manual trigger on click
 canvas.addEventListener('click', (e) => {
   const x = canvas.width / 2;
   const y = canvas.height;
   fireworks.push(new Firework(x, y, e.clientX, e.clientY));
 });
+
+// Auto-launch fireworks every 2 seconds
+setInterval(() => {
+  const x = canvas.width / 2;
+  const y = canvas.height;
+  const targetX = Math.random() * canvas.width;
+  const targetY = Math.random() * (canvas.height / 2); // Launch towards the upper half of the screen
+  fireworks.push(new Firework(x, y, targetX, targetY));
+}, 2000);
 
 animate();
