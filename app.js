@@ -6,6 +6,21 @@ canvas.height = window.innerHeight;
 
 const fireworks = [];
 const particles = [];
+let currentTheme = 'random'; // Initial theme
+
+// const themes = {
+//   red: [0],
+//   blue: [240],
+//   green: [120],
+//   yellow: [60],
+//   random: null,
+// };
+
+// Function to switch themes automatically
+setInterval(() => {
+  const themeKeys = Object.keys(themes);
+  currentTheme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
+}, 10000);
 
 class Firework {
   constructor(x, y, targetX, targetY) {
@@ -33,7 +48,7 @@ class Firework {
 
   createParticles() {
     for (let i = 0; i < 50; i++) {
-      particles.push(new Particle(this.x, this.y));
+      particles.push(new Particle(this.x, this.y, currentTheme));
     }
   }
 
@@ -46,14 +61,23 @@ class Firework {
 }
 
 class Particle {
-  constructor(x, y) {
+  constructor(x, y, theme) {
     this.x = x;
     this.y = y;
     this.speed = Math.random() * 3 + 1;
     this.angle = Math.random() * Math.PI * 2;
     this.alpha = 1;
     this.decay = Math.random() * 0.02 + 0.01;
-    this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    this.color = this.generateColor(theme);
+  }
+
+  generateColor(theme) {
+    if (theme === 'random') {
+      return `hsl(${Math.random() * 360}, 100%, 50%)`;
+    }
+    const hues = themes[theme];
+    const hue = hues[Math.floor(Math.random() * hues.length)];
+    return `hsl(${hue}, 100%, 50%)`;
   }
 
   update() {
