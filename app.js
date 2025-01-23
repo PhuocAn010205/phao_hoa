@@ -7,14 +7,7 @@ canvas.height = window.innerHeight;
 const fireworks = [];
 const particles = [];
 let currentTheme = 'random'; // Initial theme
-
-// const themes = {
-//   red: [0],
-//   blue: [240],
-//   green: [120],
-//   yellow: [60],
-//   random: null,
-// };
+let isTextDisplayed = false; // Track if text is displayed
 
 // Function to switch themes automatically
 setInterval(() => {
@@ -43,6 +36,11 @@ class Firework {
     } else {
       this.exploded = true;
       this.createParticles();
+      // Display text when the first firework explodes
+      if (!isTextDisplayed) {
+        displayText('Happy New Year!');
+        isTextDisplayed = true;
+      }
     }
   }
 
@@ -95,6 +93,23 @@ class Particle {
     ctx.fill();
     ctx.restore();
   }
+}
+
+// Function to display text
+function displayText(message) {
+  ctx.save();
+  ctx.font = '60px Arial';
+  ctx.fillStyle = 'yellow';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+  ctx.shadowBlur = 20;
+  ctx.fillText(message, canvas.width / 2, canvas.height / 2);
+  ctx.restore();
+
+  // Clear the text after a short delay
+  setTimeout(() => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }, 300000);
 }
 
 function animate() {
