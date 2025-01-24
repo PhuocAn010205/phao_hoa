@@ -37,10 +37,6 @@ class Firework {
       this.exploded = true;
       this.createParticles();
       // Display text when the first firework explodes
-      if (!isTextDisplayed) {
-        displayText('Happy New Year!');
-        isTextDisplayed = true;
-      }
     }
   }
 
@@ -107,9 +103,6 @@ function displayText(message) {
   ctx.restore();
 
   // Clear the text after a short delay
-  setTimeout(() => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }, 300000);
 }
 
 function animate() {
