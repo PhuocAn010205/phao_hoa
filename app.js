@@ -7,7 +7,6 @@ canvas.height = window.innerHeight;
 const fireworks = [];
 const particles = [];
 let currentTheme = 'random'; // Initial theme
-let isTextDisplayed = false; // Track if text is displayed
 
 // Function to switch themes automatically
 setInterval(() => {
@@ -36,7 +35,6 @@ class Firework {
     } else {
       this.exploded = true;
       this.createParticles();
-      // Display text when the first firework explodes
     }
   }
 
@@ -91,20 +89,6 @@ class Particle {
   }
 }
 
-// Function to display text
-function displayText(message) {
-  ctx.save();
-  ctx.font = '60px Arial';
-  ctx.fillStyle = 'yellow';
-  ctx.textAlign = 'center';
-  ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
-  ctx.shadowBlur = 20;
-  ctx.fillText(message, canvas.width / 2, canvas.height / 2);
-  ctx.restore();
-
-  // Clear the text after a short delay
-}
-
 function animate() {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -135,13 +119,22 @@ canvas.addEventListener('click', (e) => {
   fireworks.push(new Firework(x, y, e.clientX, e.clientY));
 });
 
-// Auto-launch fireworks every 2 seconds
-setInterval(() => {
-  const x = canvas.width / 2;
-  const y = canvas.height;
-  const targetX = Math.random() * canvas.width;
-  const targetY = Math.random() * (canvas.height / 2); // Launch towards the upper half of the screen
-  fireworks.push(new Firework(x, y, targetX, targetY));
-}, 2000);
+// Function to launch random fireworks
+function launchRandomFireworks() {
+  const count = Math.floor(Math.random() * 10) + 1; // Random count (1-10)
+  for (let i = 0; i < count; i++) {
+    const x = canvas.width / 2;
+    const y = canvas.height;
+    const targetX = Math.random() * canvas.width;
+    const targetY = Math.random() * (canvas.height / 2);
+    fireworks.push(new Firework(x, y, targetX, targetY));
+  }
 
+  // Set random interval for the next launch
+  const nextLaunchTime = Math.random() * 2000 + 1000; // Between 1-3 seconds
+  setTimeout(launchRandomFireworks, nextLaunchTime);
+}
+
+// Start the animation and random fireworks
 animate();
+launchRandomFireworks();
