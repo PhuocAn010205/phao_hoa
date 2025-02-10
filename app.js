@@ -39,8 +39,10 @@ class Firework {
   }
 
   createParticles() {
+    const shapes = ['circle', 'star', 'burst'];
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
     for (let i = 0; i < 50; i++) {
-      particles.push(new Particle(this.x, this.y, currentTheme));
+      particles.push(new Particle(this.x, this.y, currentTheme, shape));
     }
   }
 
@@ -53,7 +55,7 @@ class Firework {
 }
 
 class Particle {
-  constructor(x, y, theme) {
+  constructor(x, y, theme, shape) {
     this.x = x;
     this.y = y;
     this.speed = Math.random() * 3 + 1;
@@ -61,6 +63,9 @@ class Particle {
     this.alpha = 1;
     this.decay = Math.random() * 0.02 + 0.01;
     this.color = this.generateColor(theme);
+    this.gravity = 0.05;
+    this.shape = shape;
+    this.trail = [];
   }
 
   generateColor(theme) {
@@ -74,18 +79,42 @@ class Particle {
 
   update() {
     this.x += Math.cos(this.angle) * this.speed;
-    this.y += Math.sin(this.angle) * this.speed;
+    this.y += Math.sin(this.angle) * this.speed + this.gravity;
     this.alpha -= this.decay;
+    this.trail.push({ x: this.x, y: this.y, alpha: this.alpha });
+    if (this.trail.length > 5) this.trail.shift();
   }
 
   draw() {
     ctx.save();
     ctx.globalAlpha = this.alpha;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+    if (this.shape === 'circle') {
+      ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+    } else if (this.shape === 'star') {
+      for (let i = 0; i < 5; i++) {
+        const angle = i * (Math.PI * 2) / 5;
+        const x = this.x + Math.cos(angle) * 4;
+        const y = this.y + Math.sin(angle) * 4;
+        ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+    } else if (this.shape === 'burst') {
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x + Math.cos(this.angle) * 8, this.y + Math.sin(this.angle) * 8);
+    }
     ctx.fillStyle = this.color;
     ctx.fill();
     ctx.restore();
+
+    // Draw the trail
+    this.trail.forEach((point) => {
+      ctx.globalAlpha = point.alpha;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, 1, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    });
   }
 }
 
