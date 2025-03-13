@@ -147,6 +147,12 @@
   .form-group{
     flex-grow: 1;
   }
+  .form-group:focus-within .form-label:not(.large) {
+     color: violet;
+  }
+  .form-group:focus-within .form-input {
+    border-color: violet;
+  }
   .form-row {
     display: flex;
     gap: 32px;
@@ -166,7 +172,67 @@
     border-bottom: 2px solid #e0cff3;
     padding: 8px 0 14px 0;
     width: 100%;
+    color: #050545;
+  }
+  .form-input::placeholder {
+    color: #e0cff3;
   }
   .form-error {
     display: none;
   }
+  .large {
+    font-size: 1.3rem;
+
+  }
+  .radio-group{
+    display: flex;
+    margin-top: 16px; 
+  
+  }
+  .radio-btn {
+    display: inline-block;/*dung cho co the input*/
+  }
+  .radio-btn  +.radio-btn { /*dung de tac dong len the radio dung sau*/
+    margin-left: 24px;
+  }
+.radio-btn label::after,
+.radio-btn label::before {
+  content: "";
+  display: inline-block;
+
+}
+.radio-btn label::before {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #a7a7a7;
+margin-right: 8px;
+
+}
+.radio-btn [type="radio"] {
+  display: none;
+}
+.radio-btn [type="radio"]:checked + label::before
+{
+  background-color: #5b32dc;
+  border-color: #5b32dc;
+
+}
+.radio-btn label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.radio-btn [type="radio"]:checked + label::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 2px;
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff  ;
+  rotate: -45deg;
+  background-color: #5b32dc;
+} 
