@@ -153,10 +153,16 @@
   .form-group:focus-within .form-input {
     border-color: violet;
   }
+  .form-group:has(:invalid:not(:placeholder-shown)) .form-error {
+   visibility: visible;
+}
+.form-row:last-child {
+    margin-bottom: 0;
+  }
   .form-row {
     display: flex;
     gap: 32px;
-    margin-bottom: 30px;
+    margin-bottom: 12px;
   }
   .form-label,.form-input {
     display: block;
@@ -174,11 +180,15 @@
     width: 100%;
     color: #050545;
   }
-  .form-input::placeholder {
+  .form-input::placeholder , .form-textarea::placeholder {
     color: #e0cff3;
   }
   .form-error {
-    display: none;
+    color: red;
+    font-size: 1.1rem;
+      margin-top: 4px;
+      visibility: hidden;
+
   }
   .large {
     font-size: 1.3rem;
@@ -236,3 +246,36 @@ margin-right: 8px;
   rotate: -45deg;
   background-color: #5b32dc;
 } 
+.form-textarea {
+  resize: none;
+  max-height: 200px;
+  min-width: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #e0cff3;
+}
+.submit-box {
+  justify-content: flex-end;
+}
+.submit-btn {
+  min-width: 160px;
+  height: 50px;
+  color: #fff;
+  background: var(--primary-color);
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  font-size: 1.2rem;
+
+  
+}
+.submit-btn:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.contact-form:has(:invalid) .submit-btn {
+opacity: 0.5;
+pointer-events: none;
+}

@@ -72,32 +72,32 @@
 
         <!-- Contact form -->
         <div class="contact-form">
-         <form action="" autocomplete="off">
+         <form method="post" action="https://api-gateway.fullstack.edu.vn/action_page.php" autocomplete="off">
             <div class="form-row">
                 <div class="form-group">
                 <label for="first-name" class="form-label">FirstName</label>
-                <input type="text" id="first-name" name="name" class="form-input" required  placeholder="Enter first name"/>
-                <p class="form-error">Vui lòng nhập thông tin</p>
+                <input type="text" id="first-name" name="first-name" class="form-input" required  placeholder="Enter first name" minlength="2"/>
+                <p class="form-error">Vui lòng nhập đủ 2 kí tự !</p>
             </div>
 
             <div class="form-group">
                 <label for="last-name" class="form-label">Last Name</label>
-                <input type="text" id="last-name"  class="form-input" required placeholder="Enter last name" />
-                <p class="form-error">Vui lòng nhập thông tin</p>
+                <input type="text" id="last-name"  name="last-name" class="form-input" required placeholder="Enter last name" minlength="2" />
+                <p class="form-error">Vui lòng nhập đủ 2 kí tự !</p>
             </div>
             </div>
             
            <div class="form-row">
             <div class="form-group">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="name" class="form-input" required placeholder="Enter email"/>
-                <p class="form-error">Vui lòng nhập thông tin</p>
+                <input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-input" required placeholder="Enter email"/>
+                <p class="form-error">Nhập đúng emailemail</p>
             </div>
 
             <div class="form-group">
                 <label for="Phone" class="form-label">Phone</label>
-                <input type="tel" id="Phone" name="name" class="form-input" required placeholder="Enter Phone" />
-                <p class="form-error">Vui lòng nhập thông tin</p>
+                <input type="tel" id="Phone" name="Phone" class="form-input" required placeholder="Enter Phone"  pattern="^(0|\+?84)(3|5|7|8|9)[0-9]{8}$"/>
+                <p class="form-error">Nhập đúng số điện thoại </p>
             </div>
            </div>
            <div class="form-row">
@@ -107,27 +107,27 @@
               </label>
               <div class="radio-group">
                   <div class="radio-btn">
-                    <input type="radio" name="type" id="web-design">
+                    <input type="radio" name="type" id="web-design" required checked value="web-design">
                     <label for="web-design">Web design</label>
                   </div>
               
 
             
                 <div class="radio-btn">
-                  <input type="radio" name="type" id="web-dev">
+                  <input type="radio" name="type" id="web-dev" required value="web-dev">
                   <label for="web-dev">Web Dev</label>
                 </div>
           
              
             
               <div class="radio-btn">
-                <input type="radio" name="type" id="logo-design">
+                <input type="radio" name="type" id="logo-design" required value="logo-design"> 
                 <label for="logo-design">Logo design</label>
               </div>
         
       
             <div class="radio-btn">
-              <input type="radio" name="type" id="other">
+              <input type="radio" name="type" id="other" required   value="other">
               <label for="other">Other</label>
             </div>
           </div>
@@ -138,8 +138,29 @@
             </div>
             
            </div>
+           <div class="form-row">
+            <div class="form-group">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" class="form-textarea" required placeholder="write your message....." oninput="onResize(this)" minlength="10">
+
+              </textarea>
+              <p class="form-error">
+               Nhập ít nhất 10 kí tự
+              </p>
+            </div>
+           </div>
+            <div class="form-row submit-box">
+              <button type="submit" class="submit-btn">Send Message </button>
+            </div>
          </form>
       </div>
     </main>
+    <script>
+       function onResize(e){
+         e.style.height = 'auto';
+         e.style.height = e.scrollHeight+3 + 'px';
+
+       }
+    </script>
   </body>
 </html>
